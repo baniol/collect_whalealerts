@@ -1,3 +1,5 @@
 .env
 whalealert.log
 .vscode/
+output.txt
+venv
