@@ -26,21 +26,15 @@ TRANSACTIONS_URL = (
 def main():
     ensure_table_exists()
 
-    counter = 0
-    while True:
-        try:
-            LOGGER.debug("Starting fetch")
-            fetch_transactions()
-            LOGGER.debug("Fetch successful")
-            counter += 1
-        except:
-            LOGGER.error("Fetch unsuccessful...")
-            LOGGER.exception("")
+    try:
+        LOGGER.debug("Starting fetch")
+        fetch_transactions()
+        LOGGER.debug("Fetch successful")
+    except:
+        LOGGER.error("Fetch unsuccessful...")
+        LOGGER.exception("")
 
-        LOGGER.debug("Sleeping...")
-        time.sleep(20)
-        LOGGER.debug(f"Fetched {counter} times")
-
+    LOGGER.debug("Sleeping...")
 
 def ensure_table_exists():
     if "transactions" in METADATA.tables:
@@ -162,7 +156,7 @@ if __name__ == "__main__":
         "postgresql://"
         f"{PG_WHALEALERT_USER}:{PG_WHALEALERT_PASSWORD}"
         f"@{PG_WHALEALERT_HOST}:{PG_WHALEALERT_PORT}"
-        f"/{PG_WHALEALERT_DBNAME}?sslmode=require"
+        f"/{PG_WHALEALERT_DBNAME}"
     )
     METADATA = MetaData(ENGINE)
     METADATA.reflect(ENGINE)
